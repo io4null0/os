@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SF-OS　ver0.2P</title>
+    <meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    
+<link rel="icon" href="favicon.png">
+<link href="https://cdn.jsdelivr.net/npm/jspanel4@4.5.0/dist/jspanel.css" rel="stylesheet">
+
+<link rel="preload" href="mac01.jpg" as="image">
+<link rel="preload" href="mac02.jpg" as="image">
+<link rel="preload" href="mac03.jpg" as="image">
+<link rel="preload" href="mac04.jpg" as="image">
+<link rel="preload" href="mac05.jpg" as="image">
+<link rel="preload" href="mac06.jpg" as="image">
+<link rel="preload" href="mac07.jpg" as="image">
+
+<style>
+
+body { 
+   font-size: 110%;
+}
+
+.framemsg {
+   font-size:20px;
+   padding:10px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0px;
+  width: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+div.outer {
+  display: inline-block;
+  position: relative;
+  left: 50%;
+}
+
+div.inner {
+  position: relative;
+  left: -50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+}
+
+.dock {
+  background: rgba(200, 200, 200, 0.5);
+  padding: 7px 9px;
+  border-radius: 16px 16px 0px 0px;
+  height: auto;
+  transition: all ease-in-out 0.2s;
+}
+
+.dock .icon {
+  height: 50px;
+  transition: all ease-in 0.1s;
+}
+
+.icon:hover {
+  transform: translateY(-20px) scale(1.75);
+  z-index: 10;
+}
+
+.icon:hover + .icon {
+  transform: translateY(-10px) scale(1.35);
+  z-index: -10;
+}
+
+.icon:hover > .dock {
+  transform: translateY(-10px) scale(1.8);
+  background: green;
+}
+
+.modalsfos {
+  padding: 5px;
+}
+	
+</style>
+</head>
+<body style="background: url('mac01.jpg') no-repeat fixed; background-size: cover;">
+<div class="bottom">
+<div class="outer">
+<div class="dock inner">
+
+<img class="icon" id="about" src="icons8-help-48.png">
+<img class="icon" id="cal" src="icons8-cal-48.png">
+<img class="icon" id="news" src="icons8-news-48.png">
+<img class="icon" id="bing" src="icons8-bing-48.png">
+<img class="icon" id="mded" src="icons8-md-48.png">
+<img class="icon" id="imgur" src="icons8-imgur-48.png">
+<img class="icon" id="helptbl" src="icons8-helptbl-48.png">
+<img class="icon" id="txed" src="icons8-txed-48.png">
+<img class="icon" id="jsed" src="icons8-jsed-48.png">
+<img class="icon" id="jsex" src="icons8-jsex-48.png">
+<img class="icon" id="pyed" src="icons8-pyed-48.png">
+<img class="icon" id="bsed" src="icons8-bsed-48.png">
+<img class="icon" id="slmk" src="icons8-slmk-48.png">
+<img class="icon" id="calc" src="icons8-calc-48.png">
+<img class="icon" id="timg" src="icons8-image-48.png">
+<img class="icon" id="audio" src="icons8-audio-48.png">
+<img class="icon" id="omap" src="icons8-omap-48.png">
+<img class="icon" id="zoom" src="icons8-zoom-48.png">
+<img class="icon" id="photo2" src="icons8-photo2-48.png">
+<img class="icon" id="speech" src="icons8-speech-48.png">
+<img class="icon" id="sql" src="icons8-sql-48.png">
+<img class="icon" id="mdrdr" src="icons8-mdrdr-48.png">
+<img class="icon" id="local" src="icons8-local-48.png">
+<img class="icon" id="tegaki" src="icons8-tegaki-48.png">
+<img class="icon" id="pdf" src="icons8-pdf-48.png">
+<img class="icon" id="exif" src="icons8-exif-48.png">
+<img class="icon" id="kuro" src="icons8-kuro-48.png">
+<img class="icon" id="gifmake" src="icons8-gifmake-48.png">
+<img class="icon" id="rotate" src="icons8-rotate-48.png">
+<img class="icon" id="textpad" src="icons8-textpad-48.png">
+<img class="icon" id="treem" src="icons8-treem-48.png">
+<img class="icon" id="camera" src="icons8-camera-48.png">
+<img class="icon" id="mock" src="icons8-mock-48.png">
+
+</div>	
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jspanel4@4.5.0/dist/jspanel.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspanel4@4.5.0/dist/extensions/modal/jspanel.modal.js"></script>
+
+
+<script>
+
+//------- modal start -----------
+
+
+jsPanel.modal.create({
+            headerTitle: 'SF-OS',
+            content:   '<div class="modalsfos">' +
+            '<img src="sfos.png"><hr>' +
+            '<h4>SF-OSデモにようこそ</h4>' +
+            '<div>' +
+            '<h6>SF-OS is Simply Fake Desktop OS based JSPanel</h6>' +
+            'SF-OS ver0.2P1 Added treememo 2019/07/08' +
+            '</div>'+
+            '</div>',
+
+            position: 'center 50 -50', theme: 'info'});
+
+//------- modal end -----------
+
+
+//------- frame 生成関数 start -----------
+
+
+function seisei(fname,furl) {
+
+  var randomLeft = Math.floor( Math.random() * 11 )*10+20;
+  var randomTop = Math.floor( Math.random() * 11 )*10+20;
+
+  var frameWidth;
+  var frameHeight;
+  if (window.innerWidth > 700) {
+    frameWidth = Math.floor(window.innerWidth/2);
+  } else {
+    frameWidth = 320;
+  };
+  if (window.innerHeight > 500) {
+    frameHeight = Math.floor(window.innerHeight/2);
+  } else {
+    frameHeight = 220;
+  };
+
+  var frameparm;
+  frameparm = frameWidth+" "+frameHeight;
+  
+
+  jsPanel.create({
+    headerTitle: fname,
+    panelSize: frameparm,
+    position: {
+          my:      "left-top",
+          at:      "left-top",
+          offsetX: randomLeft,
+          offsetY: randomTop
+    },
+    content: '<iframe src="'+furl+'" style="width: 100%; height: 100%;"></iframe>',
+  });
+
+
+}
+
+//------- frame 生成関数 end -----------
+
+
+//------- frame start ------------ 
+
+var treem = document.getElementById("treem");
+
+//直接関数を記述して登録する
+treem.addEventListener( "click" , function () {
+    seisei('ツリーメモ','./treem/index.html');
+} , false ); 
+
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var mock = document.getElementById("mock");
+
+//直接関数を記述して登録する
+mock.addEventListener( "click" , function () {
+    seisei('モック作成ツール','./mock/index.html');
+} , false ); 
+
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var camera = document.getElementById("camera");
+
+//直接関数を記述して登録する
+camera.addEventListener( "click" , function () {
+    seisei('カメラ','./camera/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var textpad = document.getElementById("textpad");
+
+//直接関数を記述して登録する
+textpad.addEventListener( "click" , function () {
+    seisei('簡易メモ','./textpad/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var rotate = document.getElementById("rotate");
+
+//直接関数を記述して登録する
+rotate.addEventListener( "click" , function () {
+    seisei('画像リサイズ回転','./rotate/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var gifmake = document.getElementById("gifmake");
+
+//直接関数を記述して登録する
+gifmake.addEventListener( "click" , function () {
+    seisei('アニメGIFツール','./gifmake/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var kuro = document.getElementById("kuro");
+
+//直接関数を記述して登録する
+kuro.addEventListener( "click" , function () {
+    seisei('色塗潰し＋クロップツール','./kuro/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+//------- frame start ------------ 
+
+var exif = document.getElementById("exif");
+
+//直接関数を記述して登録する
+exif.addEventListener( "click" , function () {
+    seisei('Exif表示ツール','./exif/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var helptbl = document.getElementById("helptbl");
+
+//直接関数を記述して登録する
+helptbl.addEventListener( "click" , function () {
+    seisei('ヘルプテーブル','./helptbl/index.html');
+} , false ); 
+
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var pdf = document.getElementById("pdf");
+
+//直接関数を記述して登録する
+pdf.addEventListener( "click" , function () {
+    seisei('簡易PDFビューワ','./pdf/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var tegaki = document.getElementById("tegaki");
+
+//直接関数を記述して登録する
+tegaki.addEventListener( "click" , function () {
+    seisei('手書きメモ','./tegaki/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var local = document.getElementById("local");
+
+//直接関数を記述して登録する
+local.addEventListener( "click" , function () {
+    seisei('ローカルストレージ','./local/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var mdrdr = document.getElementById("mdrdr");
+
+//直接関数を記述して登録する
+mdrdr.addEventListener( "click" , function () {
+    seisei('マークダウンリーダ','./mdrdr/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var speech = document.getElementById("speech");
+
+//直接関数を記述して登録する
+speech.addEventListener( "click" , function () {
+    seisei('音声メモ','./webspeech/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var sql = document.getElementById("sql");
+
+//直接関数を記述して登録する
+sql.addEventListener( "click" , function () {
+    seisei('SQL テスト環境','./sql/arasql002.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var photo2 = document.getElementById("photo2");
+
+//直接関数を記述して登録する
+photo2.addEventListener( "click" , function () {
+    seisei('Photo Editor2','./photo2/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var zoom = document.getElementById("zoom");
+
+//直接関数を記述して登録する
+zoom.addEventListener( "click" , function () {
+    seisei('Zoom','./zoom/grassindex.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var omap = document.getElementById("omap");
+
+//直接関数を記述して登録する
+omap.addEventListener( "click" , function () {
+    seisei('地図検索','./osm/osm00b.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var audio = document.getElementById("audio");
+
+//直接関数を記述して登録する
+audio.addEventListener( "click" , function () {
+    seisei('mp3プレーヤ','./audio/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var timg = document.getElementById("timg");
+
+//直接関数を記述して登録する
+timg.addEventListener( "click" , function () {
+    seisei('imageエディタ','./image/timg/timg.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var calc = document.getElementById("calc");
+
+//直接関数を記述して登録する
+calc.addEventListener( "click" , function () {
+    seisei('電卓','./memory-first-calculator/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var bsed = document.getElementById("bsed");
+
+//直接関数を記述して登録する
+bsed.addEventListener( "click" , function () {
+    seisei('BASIC!エディタ','./acebs/acebas.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var slmk = document.getElementById("slmk");
+
+//直接関数を記述して登録する
+slmk.addEventListener( "click" , function () {
+    seisei('スライドメーカ','./slidemake/remarkset3.html');
+} , false ); 
+
+//------- frame end ------------
+
+//------- frame start ------------ 
+
+var pyed = document.getElementById("pyed");
+
+//直接関数を記述して登録する
+pyed.addEventListener( "click" , function () {
+    seisei('Pythonエディタ','./acepy/acepython3pro.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var jsex = document.getElementById("jsex");
+
+//直接関数を記述して登録する
+jsex.addEventListener( "click" , function () {
+    seisei('JS簡易実行環境','https://tokyopwa.bitbucket.io/jstest/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var jsed = document.getElementById("jsed");
+
+//直接関数を記述して登録する
+jsed.addEventListener( "click" , function () {
+    seisei('JSエディタ','./acejs/acejs3pro.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var txed = document.getElementById("txed");
+
+//直接関数を記述して登録する
+txed.addEventListener( "click" , function () {
+    seisei('テキストエディタ','./acetx/acetx3pro.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var imgur = document.getElementById("imgur");
+
+//直接関数を記述して登録する
+imgur.addEventListener( "click" , function () {
+    seisei('画像アップ(imgur)','./imgurupload/index.html');
+} , false ); 
+
+//------- frame end ------------
+
+
+//------- frame start ------------ 
+
+var news = document.getElementById("news");
+
+//直接関数を記述して登録する
+news.addEventListener( "click" , function () {
+    seisei('ニュース検索','./newsp/index.html');
+} , false ); 
+
+
+//------- frame end ------------
+
+//------- frame start ------------ 
+
+var cal = document.getElementById("cal");
+
+//直接関数を記述して登録する
+cal.addEventListener( "click" , function () {
+    seisei('カレンダー','./calendar/index.html');
+} , false ); 
+
+//------- frame end ------------ 
+
+
+//------- frame start ------------ 
+
+var mded = document.getElementById("mded");
+
+//直接関数を記述して登録する
+mded.addEventListener( "click" , function () {
+    seisei('MDエディター','./mditor/mded3x.html');
+} , false ); 
+
+//------- frame end ------------ 
+
+//------- frame start ------------ 
+
+var bing = document.getElementById("bing");
+
+//直接関数を記述して登録する
+bing.addEventListener( "click" , function () {
+    seisei('ネット検索','https://bing.com');
+} , false ); 
+
+//------- frame end ------------ 
+
+
+//------- frame start ------------ 
+
+var about = document.getElementById("about");
+
+//直接関数を記述して登録する
+about.addEventListener( "click" , function () {
+
+    jsPanel.modal.create({
+                headerTitle: 'SF-OSについて',
+                content: '<div class="modalsfos"><img src="sfos.png"><hr>SF-OSは偽物のOSです。単なるデスクトップ遊びです</div>',
+                position: 'center 50 -50', theme: 'info'});
+
+
+} , false ); 
+
+
+//------- frame end ------------ 
+
+
+// 背景画像の入り替え
+
+function backImgChange(){
+  var imgURL = [
+      'mac01.jpg',
+      'mac02.jpg',
+      'mac03.jpg',
+      'mac04.jpg',
+      'mac05.jpg',
+      'mac06.jpg',
+      'mac07.jpg'
+  ];
+  var ImgResult = imgURL[Math.floor( Math.random() * 7 )];
+  console.log(ImgResult);
+  document.body.style.backgroundImage = "url('" + ImgResult + "')";
+}
+
+backImgChange();
+
+setInterval(backImgChange, 300000);
+
+localStorage.setItem('sfos-app-flag20190219', 'none');
+
+function appcall(){
+  // 未仕様
+  var appinfo = localStorage.getItem('sfos-app-flag20190219');
+  if (appinfo == 'none') {
+  } else {
+    localStorage.setItem('sfos-app-flag20190219', 'none');
+    document.getElementById(appinfo).click();
+    alert('別のアプリ'+appinfo+'が呼出されました');
+  };
+}
+ 
+setInterval(appcall, 2000);
+
+
+
+</script>
+</body>
+</html>
